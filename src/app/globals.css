@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@theme {
+  --color-canvas: #f6f5f1;
+  --color-surface: #ffffff;
+  --color-ink: #16181d;
+  --color-muted: #676b73;
+  --color-faint: #9a9da3;
+  --color-line: #e7e4dd;
+  --color-accent: #0f6e66;
+  --color-accent-strong: #0b5953;
+  --color-accent-soft: #e5f1ef;
+  --color-good: #177245;
+  --color-good-soft: #e8f5ed;
+  --color-warn: #a3580b;
+  --color-warn-soft: #fcf2e3;
+  --color-bad: #b4223f;
+  --color-bad-soft: #fbeaee;
+
+  --shadow-card: 0 1px 2px rgb(22 24 29 / 0.04), 0 4px 16px rgb(22 24 29 / 0.04);
+  --shadow-lift: 0 2px 4px rgb(22 24 29 / 0.05), 0 12px 32px rgb(22 24 29 / 0.08);
+
+  --animate-rise: rise 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
