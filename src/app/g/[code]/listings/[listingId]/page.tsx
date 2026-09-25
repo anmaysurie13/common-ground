@@ -6,7 +6,8 @@ import { aiEnabled } from "@/lib/gemini";
 import { displayName, loadGroup, runMatching } from "@/lib/group";
 import { DiscussionPanel } from "@/components/discussion-panel";
 import { ExplainButton } from "@/components/explain-button";
-import { ListingThumb, ScoreRing } from "@/components/match-ui";
+import { ListingGallery } from "@/components/listing-gallery";
+import { PlaceholderThumb, ScoreRing } from "@/components/match-ui";
 import { PersonBreakdown } from "@/components/person-breakdown";
 import { Badge, Card, Container } from "@/components/ui";
 import { DeleteListing } from "./delete-listing";
@@ -49,15 +50,12 @@ export default async function ListingDetailPage({ params }: PageProps<"/g/[code]
       <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="space-y-6">
           <Card className="overflow-hidden">
-            <ListingThumb listing={listing} className="h-48 w-full sm:h-64" />
-            {listing.images.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto p-3">
-                {listing.images.slice(1).map((src) => (
-                  // eslint-disable-next-line @next/next/no-img-element -- arbitrary user-supplied hosts
-                  <img key={src} src={src} alt="" className="h-20 w-28 shrink-0 rounded-xl object-cover" loading="lazy" />
-                ))}
-              </div>
-            )}
+            <ListingGallery
+              images={listing.images}
+              title={listing.title}
+              credit={group.isDemo ? "Illustrative photos · Unsplash" : undefined}
+              placeholder={<PlaceholderThumb listing={listing} className="h-56 w-full sm:h-80" />}
+            />
             <div className="p-6 sm:p-8">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>

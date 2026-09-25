@@ -115,7 +115,14 @@ function PreviewCard() {
     { name: "Kavita", gets: ["25 min to Hinjewadi"], gives: ["Not pet-friendly"] },
   ];
   return (
-    <Card className="animate-rise p-5 shadow-lift [animation-delay:120ms] sm:p-6" aria-label="Example result card">
+    <Card className="animate-rise overflow-hidden shadow-lift [animation-delay:120ms]" aria-label="Example result card">
+      {/* eslint-disable-next-line @next/next/no-img-element -- remote demo photo (Unsplash) */}
+      <img
+        src="https://images.unsplash.com/photo-1665249934445-1de680641f50?auto=format&fit=crop&w=900&h=360&q=70"
+        alt="Bright living room with a large window"
+        className="h-36 w-full bg-line/60 object-cover"
+      />
+      <div className="p-5 sm:p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs font-medium text-accent">Viable option</p>
@@ -148,6 +155,7 @@ function PreviewCard() {
             </div>
           </div>
         ))}
+      </div>
       </div>
     </Card>
   );

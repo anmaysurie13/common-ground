@@ -3,6 +3,11 @@
 
 import type { ListingInput, Preferences } from "./types";
 
+// Illustrative photos from Unsplash (unsplash.com/license), loaded from Unsplash's image CDN.
+// They are stock photos, not pictures of these listings.
+const photos = (...ids: string[]) =>
+  ids.map((id) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=70`);
+
 export const DEMO_GROUP_NAME = "Riya, Meera & Kavita — Pune 3BHK";
 
 export const DEMO_MEMBERS: { name: string; preferences: Preferences }[] = [
@@ -73,7 +78,7 @@ export const DEMO_LISTINGS: (Omit<ListingInput, "commutes"> & { commuteBySlot: R
     locationNotes: "Near Baner Road; ~30 min to Kothrud in normal traffic.",
     url: "",
     description: "Corner flat with good light, two balconies and a society gym. Owner prefers no pets.",
-    images: [],
+    images: photos("1639335944967-03b902ead5fd", "1665249934445-1de680641f50", "1652882860938-f90aa298e644"),
     amenities: ["gym", "balcony", "power backup", "24x7 security"],
   },
   {
@@ -91,7 +96,7 @@ export const DEMO_LISTINGS: (Omit<ListingInput, "commutes"> & { commuteBySlot: R
     locationNotes: "Walking distance to Riya's gym. Older building, no lift.",
     url: "",
     description: "Spacious older-style flat on a quiet lane. Second floor, stairs only.",
-    images: [],
+    images: photos("1605640214887-5f1f80e46cd4", "1654506012740-09321c969dc2", "1629042306650-62a83c847b15"),
     amenities: ["balcony", "covered parking"],
   },
   {
@@ -109,7 +114,7 @@ export const DEMO_LISTINGS: (Omit<ListingInput, "commutes"> & { commuteBySlot: R
     locationNotes: "Gated township, 8 min to Phase 1.",
     url: "",
     description: "Fully furnished, three attached bathrooms, clubhouse and pool.",
-    images: [],
+    images: photos("1632398461186-37c76a70062f", "1600493505873-cddd69453072", "1560448075-57d0285fc59b"),
     amenities: ["gym", "pool", "power backup", "balcony", "clubhouse"],
   },
   {
@@ -127,7 +132,7 @@ export const DEMO_LISTINGS: (Omit<ListingInput, "commutes"> & { commuteBySlot: R
     locationNotes: "High-rise near cafés and the high street.",
     url: "",
     description: "Top-spec furnished flat with pool, gym and two covered parking spots.",
-    images: [],
+    images: photos("1559998852-f8ab898d889e", "1613575831056-0acd5da8f085", "1776363116182-51694a04a1d5"),
     amenities: ["gym", "pool", "power backup", "balcony", "clubhouse"],
   },
   {
@@ -145,7 +150,7 @@ export const DEMO_LISTINGS: (Omit<ListingInput, "commutes"> & { commuteBySlot: R
     locationNotes: "Central Aundh, street parking only.",
     url: "",
     description: "Well-kept mid-rise with a lift and large windows. No dedicated parking.",
-    images: [],
+    images: photos("1663985139222-6af2f8646104", "1612419299101-6c294dc2901d", "1612320582827-a95ab2596dbc"),
     amenities: ["balcony", "power backup"],
   },
   {
@@ -163,7 +168,7 @@ export const DEMO_LISTINGS: (Omit<ListingInput, "commutes"> & { commuteBySlot: R
     locationNotes: "Hill-side society; quick to Kothrud, highway access to Hinjewadi.",
     url: "",
     description: "Unfurnished flat in a leafy pet-friendly society with a garden and gym.",
-    images: [],
+    images: photos("1719139834652-11a5fb80cba5", "1663756915301-2ba688e078cf", "1693585576674-2e1b7166f583"),
     amenities: ["gym", "garden", "balcony", "power backup"],
   },
   {
@@ -181,7 +186,7 @@ export const DEMO_LISTINGS: (Omit<ListingInput, "commutes"> & { commuteBySlot: R
     locationNotes: "Close to the Hinjewadi road; far from Kothrud.",
     url: "",
     description: "Good value, newer building with lift and parking.",
-    images: [],
+    images: photos("1663231659579-b28d7e2b924b", "1652882860902-7c6b0f88ef23", "1755624222023-621f7718950b"),
     amenities: ["power backup", "gym"],
   },
 ];

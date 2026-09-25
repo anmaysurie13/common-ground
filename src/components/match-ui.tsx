@@ -1,5 +1,6 @@
 import type { Check, CheckState, PersonEvaluation } from "@/lib/matching/engine";
 import type { Listing } from "@/lib/types";
+import { ListingPhoto } from "./listing-photo";
 import { cn } from "./ui";
 
 const stateStyle: Record<CheckState, { tone: string; label: string }> = {
@@ -69,10 +70,18 @@ const PALETTE = ["#d9e7e4", "#e9e2d6", "#dfe2ea", "#e8dfe3", "#e2e8da"];
 export function ListingThumb({ listing, className }: { listing: Listing; className?: string }) {
   if (listing.images[0]) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element -- arbitrary user-supplied hosts
-      <img src={listing.images[0]} alt={listing.title} className={cn("object-cover", className)} loading="lazy" />
+      <ListingPhoto
+        src={listing.images[0]}
+        alt={listing.title}
+        className={className}
+        fallback={<PlaceholderThumb listing={listing} className={className} />}
+      />
     );
   }
+  return <PlaceholderThumb listing={listing} className={className} />;
+}
+
+export function PlaceholderThumb({ listing, className }: { listing: Listing; className?: string }) {
   const hue = PALETTE[[...listing.area].reduce((s, ch) => s + ch.charCodeAt(0), 0) % PALETTE.length];
   return (
     <div className={cn("relative flex items-end overflow-hidden", className)} style={{ background: hue }} aria-hidden>
