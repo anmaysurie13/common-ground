@@ -78,7 +78,7 @@ Copy `.env.example` to `.env.local`:
 | `SUPABASE_SERVICE_ROLE_KEY` | **server only** | Database access from server actions |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | public | Not used yet. Reserved for adding Supabase Auth |
 | `GEMINI_API_KEY` | **server only** | Optional AI helpers |
-| `GEMINI_MODEL` | server | Optional, defaults to `gemini-2.5-flash` |
+| `GEMINI_MODEL` | server | Optional, defaults to `gemini-3.8-flash` |
 
 ### Supabase setup
 

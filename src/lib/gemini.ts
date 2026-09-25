@@ -8,7 +8,7 @@ import type { Listing } from "./types";
 // It never decides eligibility and never sees or changes scores it could "fix".
 
 export const aiEnabled = Boolean(process.env.GEMINI_API_KEY);
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
 async function generate(system: string, prompt: string, json: boolean): Promise<string | null> {

@@ -104,5 +104,7 @@ alter table public.match_results  enable row level security;
 alter table public.listing_flags  enable row level security;
 alter table public.listing_notes  enable row level security;
 
--- Belt and braces: make sure the public roles hold no table privileges either.
-revoke all on all tables in schema public from anon, authenticated;
+-- Belt and braces: the public roles hold no privileges on these tables either.
+-- (Scoped to this app's tables so other tables in a shared project are untouched.)
+revoke all on public.groups, public.group_members, public.preferences, public.listings,
+  public.match_results, public.listing_flags, public.listing_notes from anon, authenticated;
