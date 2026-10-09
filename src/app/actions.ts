@@ -53,15 +53,20 @@ export async function createDemoAction(): Promise<void> {
     group.id,
     DEMO_MEMBERS.map((m, i) => ({ slot: i + 1, name: m.name, secretHash: secrets[i].hash })),
   );
-  for (const [i, m] of members.entries()) {
-    await repo.savePreferences(m.id, group.id, DEMO_MEMBERS[i].preferences, true);
-  }
-  for (const { commuteBySlot, ...listing } of DEMO_LISTINGS) {
-    const commutes = Object.fromEntries(
-      Object.entries(commuteBySlot).map(([slot, minutes]) => [members[Number(slot)].id, minutes]),
-    );
-    await repo.createListing(group.id, "Riya", { ...listing, commutes });
-  }
+  // Independent writes, so run them together rather than one round trip at a time.
+  await Promise.all([
+    ...members.map((m, i) => repo.savePreferences(m.id, group.id, DEMO_MEMBERS[i].preferences, true)),
+    repo.createListings(
+      group.id,
+      "Riya",
+      DEMO_LISTINGS.map(({ commuteBySlot, ...listing }) => ({
+        ...listing,
+        commutes: Object.fromEntries(
+          Object.entries(commuteBySlot).map(([slot, minutes]) => [members[Number(slot)].id, minutes]),
+        ),
+      })),
+    ),
+  ]);
   // In the demo you can act as all three friends.
   await rememberMembers(
     code,

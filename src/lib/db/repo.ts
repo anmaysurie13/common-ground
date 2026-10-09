@@ -31,6 +31,8 @@ export interface Repo {
   savePreferences(memberId: string, groupId: string, preferences: Preferences, submit: boolean): Promise<void>;
 
   createListing(groupId: string, addedBy: string, input: ListingInput): Promise<Listing>;
+  /** Bulk insert in one round trip (used to seed the demo). */
+  createListings(groupId: string, addedBy: string, inputs: ListingInput[]): Promise<void>;
   listListings(groupId: string): Promise<Listing[]>;
   deleteListing(groupId: string, listingId: string): Promise<void>;
 

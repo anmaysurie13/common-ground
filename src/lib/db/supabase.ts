@@ -1,6 +1,6 @@
 import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import type { Group, Listing, ListingFlag, ListingNote, MemberRecord, Preferences } from "../types";
+import type { Group, Listing, ListingFlag, ListingInput, ListingNote, MemberRecord, Preferences } from "../types";
 import type { Repo } from "./repo";
 
 // All database access happens on the server with the service-role key.
@@ -70,6 +70,27 @@ const toListing = (r: Row): Listing => ({
   amenities: (r.amenities as string[]) ?? [],
   addedBy: (r.added_by as string) ?? "",
   createdAt: r.created_at as string,
+});
+
+const toListingRow = (groupId: string, addedBy: string, l: ListingInput) => ({
+  group_id: groupId,
+  added_by: addedBy,
+  title: l.title,
+  area: l.area,
+  rent: l.rent,
+  bedrooms: l.bedrooms,
+  bathrooms: l.bathrooms,
+  floor: l.floor,
+  has_lift: l.lift,
+  has_parking: l.parking,
+  pet_friendly: l.petFriendly,
+  furnishing: l.furnishing,
+  commutes: l.commutes,
+  location_notes: l.locationNotes,
+  url: l.url,
+  description: l.description,
+  images: l.images,
+  amenities: l.amenities,
 });
 
 export const supabaseRepo: Repo = {
@@ -142,33 +163,13 @@ export const supabaseRepo: Repo = {
   },
 
   async createListing(groupId, addedBy, l) {
-    const row = check(
-      await db()
-        .from("listings")
-        .insert({
-          group_id: groupId,
-          added_by: addedBy,
-          title: l.title,
-          area: l.area,
-          rent: l.rent,
-          bedrooms: l.bedrooms,
-          bathrooms: l.bathrooms,
-          floor: l.floor,
-          has_lift: l.lift,
-          has_parking: l.parking,
-          pet_friendly: l.petFriendly,
-          furnishing: l.furnishing,
-          commutes: l.commutes,
-          location_notes: l.locationNotes,
-          url: l.url,
-          description: l.description,
-          images: l.images,
-          amenities: l.amenities,
-        })
-        .select()
-        .single(),
-    );
+    const row = check(await db().from("listings").insert(toListingRow(groupId, addedBy, l)).select().single());
     return toListing(row);
+  },
+
+  async createListings(groupId, addedBy, inputs) {
+    if (inputs.length === 0) return;
+    check(await db().from("listings").insert(inputs.map((l) => toListingRow(groupId, addedBy, l))));
   },
 
   async listListings(groupId) {

@@ -137,6 +137,13 @@ export const localRepo: Repo = {
     });
   },
 
+  async createListings(groupId, addedBy, inputs) {
+    await write((db) => {
+      const createdAt = new Date().toISOString();
+      db.listings.push(...inputs.map((input) => ({ ...input, id: randomUUID(), groupId, addedBy, createdAt })));
+    });
+  },
+
   async listListings(groupId) {
     const db = await load();
     return clone(db.listings.filter((l) => l.groupId === groupId));
