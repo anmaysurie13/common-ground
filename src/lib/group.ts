@@ -1,5 +1,6 @@
 import "server-only";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { repo } from "./db";
 import { matchListings, type EvaluatedMember, type MatchOutcome } from "./matching/engine";
 import { controlledMemberIds } from "./session";
@@ -34,6 +35,12 @@ export async function loadGroup(code: string): Promise<GroupContext & { records:
     allSubmitted: members.length === group.size && members.every((m) => m.submittedAt && m.preferences),
   };
 }
+
+/**
+ * Per-request memoised loadGroup for pages and layouts, so the layout and page share one fetch.
+ * Server actions use the uncached loadGroup so they always read fresh state.
+ */
+export const loadGroupForRender = cache(loadGroup);
 
 export function evaluatedMembers(members: Member[]): EvaluatedMember[] {
   return members

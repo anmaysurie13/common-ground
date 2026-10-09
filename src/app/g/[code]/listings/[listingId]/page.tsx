@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { repo } from "@/lib/db";
 import { floorLabel, furnishingLabel, inr } from "@/lib/format";
 import { aiEnabled } from "@/lib/gemini";
-import { displayName, loadGroup, runMatching } from "@/lib/group";
+import { displayName, loadGroupForRender, runMatching } from "@/lib/group";
 import { DiscussionPanel } from "@/components/discussion-panel";
 import { ExplainButton } from "@/components/explain-button";
 import { ListingGallery } from "@/components/listing-gallery";
@@ -14,7 +14,7 @@ import { DeleteListing } from "./delete-listing";
 
 export default async function ListingDetailPage({ params }: PageProps<"/g/[code]/listings/[listingId]">) {
   const { code, listingId } = await params;
-  const { group, members, me, allSubmitted } = await loadGroup(code);
+  const { group, members, me, allSubmitted } = await loadGroupForRender(code);
   const [listings, flags, notes] = await Promise.all([
     repo.listListings(group.id),
     repo.listFlags(group.id),

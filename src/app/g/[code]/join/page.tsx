@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
-import { loadGroup } from "@/lib/group";
+import { loadGroupForRender } from "@/lib/group";
 import { Card, Container, PageTitle } from "@/components/ui";
 import { JoinForm } from "./join-form";
 
 export default async function JoinPage({ params }: PageProps<"/g/[code]/join">) {
   const { code } = await params;
-  const { group, members, me } = await loadGroup(code);
+  const { group, members, me } = await loadGroupForRender(code);
   const open = members.filter((m) => !m.name).length;
   const mine = me.find((m) => !m.submittedAt);
   if (mine && group.status !== "locked") redirect(`/g/${code}/preferences?member=${mine.id}`);

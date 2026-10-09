@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { repo } from "@/lib/db";
 import { inr } from "@/lib/format";
-import { displayName, loadGroup, runMatching } from "@/lib/group";
+import { displayName, loadGroupForRender, runMatching } from "@/lib/group";
 import { MATCH_CONFIG } from "@/lib/matching/config";
 import { MatchingGate } from "@/components/gate";
 import { Legend } from "@/components/match-ui";
@@ -10,7 +10,7 @@ import { Card, Container, LinkButton, PageTitle } from "@/components/ui";
 
 export default async function ResultsPage({ params }: PageProps<"/g/[code]/results">) {
   const { code } = await params;
-  const { group, members, me, allSubmitted } = await loadGroup(code);
+  const { group, members, me, allSubmitted } = await loadGroupForRender(code);
   if (group.status !== "locked" || !allSubmitted) return <MatchingGate code={code} group={group} members={members} />;
 
   const [listings, flags] = await Promise.all([repo.listListings(group.id), repo.listFlags(group.id)]);

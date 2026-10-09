@@ -1,10 +1,10 @@
-import { displayName, loadGroup } from "@/lib/group";
+import { displayName, loadGroupForRender } from "@/lib/group";
 import { Container, LinkButton, PageTitle } from "@/components/ui";
 import { ListingForm } from "../listing-form";
 
 export default async function NewListingPage({ params }: PageProps<"/g/[code]/listings/new">) {
   const { code } = await params;
-  const { members, me } = await loadGroup(code);
+  const { members, me } = await loadGroupForRender(code);
 
   if (me.length === 0) {
     return (

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { aiEnabled } from "@/lib/gemini";
 import { describePreferences } from "@/lib/describe";
-import { displayName, loadGroup } from "@/lib/group";
+import { displayName, loadGroupForRender } from "@/lib/group";
 import { EMPTY_PREFERENCES } from "@/lib/validation";
 import { Avatar } from "@/components/match-ui";
 import { Card, Container, LinkButton, PageTitle, cn } from "@/components/ui";
@@ -11,7 +11,7 @@ import { PreferenceWizard } from "./preference-wizard";
 export default async function PreferencesPage({ params, searchParams }: PageProps<"/g/[code]/preferences">) {
   const { code } = await params;
   const { member: memberParam } = await searchParams;
-  const { group, members, me } = await loadGroup(code);
+  const { group, members, me } = await loadGroupForRender(code);
 
   if (group.status === "locked") {
     return (

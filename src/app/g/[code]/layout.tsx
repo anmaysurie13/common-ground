@@ -1,10 +1,10 @@
-import { loadGroup } from "@/lib/group";
+import { loadGroupForRender } from "@/lib/group";
 import { Badge, Container } from "@/components/ui";
 import { GroupNav } from "./group-nav";
 
 export default async function GroupLayout({ children, params }: LayoutProps<"/g/[code]">) {
   const { code } = await params;
-  const { group, me } = await loadGroup(code);
+  const { group, me } = await loadGroupForRender(code);
   return (
     <div>
       <div className="border-b border-line/70 bg-surface/50">

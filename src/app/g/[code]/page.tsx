@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import Link from "next/link";
 import { repo } from "@/lib/db";
-import { displayName, loadGroup } from "@/lib/group";
+import { displayName, loadGroupForRender } from "@/lib/group";
 import { Avatar } from "@/components/match-ui";
 import { Badge, Card, Container, LinkButton, PageTitle } from "@/components/ui";
 import { CopyLink } from "./copy-link";
@@ -10,7 +10,7 @@ import { LockControls } from "./lock-controls";
 export default async function GroupPage({ params, searchParams }: PageProps<"/g/[code]">) {
   const { code } = await params;
   const { created } = await searchParams;
-  const { group, members, me, allSubmitted } = await loadGroup(code);
+  const { group, members, me, allSubmitted } = await loadGroupForRender(code);
   const listings = await repo.listListings(group.id);
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";

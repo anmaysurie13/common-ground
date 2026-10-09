@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { repo } from "@/lib/db";
 import { inr } from "@/lib/format";
-import { loadGroup, runMatching } from "@/lib/group";
+import { loadGroupForRender, runMatching } from "@/lib/group";
 import { ListingThumb } from "@/components/match-ui";
 import { Badge, Card, Container, LinkButton, PageTitle } from "@/components/ui";
 
 export default async function ListingsPage({ params }: PageProps<"/g/[code]/listings">) {
   const { code } = await params;
-  const { group, members, me } = await loadGroup(code);
+  const { group, members, me } = await loadGroupForRender(code);
   const listings = await repo.listListings(group.id);
   const locked = group.status === "locked";
   const outcome = locked ? runMatching(members, listings) : null;

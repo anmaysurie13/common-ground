@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { repo } from "@/lib/db";
 import { furnishingLabel, inr } from "@/lib/format";
-import { displayName, loadGroup, runMatching } from "@/lib/group";
+import { displayName, loadGroupForRender, runMatching } from "@/lib/group";
 import { MatchingGate } from "@/components/gate";
 import { StateIcon } from "@/components/match-ui";
 import { Badge, Card, Container, PageTitle, cn } from "@/components/ui";
@@ -12,7 +12,7 @@ const MAX = 3;
 export default async function ComparePage({ params, searchParams }: PageProps<"/g/[code]/compare">) {
   const { code } = await params;
   const { ids } = await searchParams;
-  const { group, members, allSubmitted } = await loadGroup(code);
+  const { group, members, allSubmitted } = await loadGroupForRender(code);
   if (group.status !== "locked" || !allSubmitted) return <MatchingGate code={code} group={group} members={members} />;
 
   const listings = await repo.listListings(group.id);
